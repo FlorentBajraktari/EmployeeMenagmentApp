@@ -50,10 +50,12 @@ class LoginApp(MDApp):
         return layout
 
     def _create_username_component(self):
-        self.username_input = MDTextField(hint_text="Username")
+        self.username_input = MDTextField(
+            hint_text="Username", size_hint=(0.8, None), height=40)
 
     def _create_password_components(self):
-        self.password_input = MDTextField(password=True, hint_text="Password")
+        self.password_input = MDTextField(
+            password=True, hint_text="Password", size_hint=(0.8, None), height=40)
         self.password_input.bind(
             on_text_validate=self.login_with_provided_user_credentials
         )
@@ -69,8 +71,8 @@ class LoginApp(MDApp):
     def _create_button_component(self):
         login_button = Button(
             text="Login",
-            size_hint=(None, None),
-            size=(100, 50),
+            size_hint=(0.8, None),
+            height=50,
             background_color=(0, 0.7, 0.9, 1),
         )
         login_button.bind(on_press=self.login_with_provided_user_credentials)

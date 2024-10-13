@@ -1,7 +1,8 @@
 class User:
-    def __init__(self, username, pasword):
-        self.__username = username
-        self.__pasword = pasword
+    def __init__(self, username, password, user_role):
+        self.username = username
+        self.password = password
+        self.user_role = user_role
 
     @property
     def username(self):
@@ -12,12 +13,20 @@ class User:
         self.__username = username
 
     @property
-    def pasword(self):
-        return self.__pasword
+    def password(self):
+        return self.__password
 
-    @pasword.setter
-    def pasword(self, pasword):
-        self.__pasword = pasword
+    @password.setter
+    def password(self, password):
+        self.__password = password
+
+    @property
+    def user_role(self):
+        return self.__user_role
+
+    @user_role.setter
+    def user_role(self, user_role):
+        self.__user_role = user_role
 
 
 class Department:
