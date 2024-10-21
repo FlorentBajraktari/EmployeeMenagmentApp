@@ -1,5 +1,15 @@
 from enums import UserRole, UserFeatures
-from admin_view import EmployeeManagerContentPanel, TaskManagerContentPanel, DepartmentManagerContentPanel, PayrollManagerContentPanel, AccountManagerContentPanel, CustomerManagementContentPanel, HolidayManagerContentPanel, SalesManagementContentPanel, CalendarManagementContentPanel
+from admin_view import (
+    EmployeeManagerContentPanel,
+    TaskManagerContentPanel,
+    DepartmentManagerContentPanel,
+    PayrollManagerContentPanel,
+    AccountManagementPanel,
+    HolidayManagerContentPanel,
+    CustomerManagementContentPanel,
+    SalesManagementContentPanel,
+    CalendarManagementContentPanel,
+)
 
 
 class AuthorizationService:
@@ -27,6 +37,33 @@ class AuthorizationService:
                 f"The provided user role {user_role} is not supported")
 
 
+class UserFeatureContentPanelResolver:
+    user_feature_content_panel_map = None
+
+    @staticmethod
+    def get_user_feature_panel(user_feature):
+        return UserFeatureContentPanelResolver.get_user_feature_content_panel_map().get(user_feature)
+
+    @staticmethod
+    def get_user_feature_content_panel_map():
+        if UserFeatureContentPanelResolver.user_feature_content_panel_map is None:
+            # Përdorni importim të vonuar për të shmangur problemin e ciklit të importimit
+
+            UserFeatureContentPanelResolver.user_feature_content_panel_map = {
+                "Employees": EmployeeManagerContentPanel(),
+                "Task": TaskManagerContentPanel(),
+                "Departments": DepartmentManagerContentPanel(),
+                "Payrolls": PayrollManagerContentPanel(),
+                "Holidays": HolidayManagerContentPanel(),
+                "Accounts": AccountManagementPanel(),
+                "Customers": CustomerManagementContentPanel(),
+                "Sales": SalesManagementContentPanel(),
+                "Calendar": CalendarManagementContentPanel(),
+                "Sign out": None,
+            }
+        return UserFeatureContentPanelResolver.user_feature_content_panel_map
+
+
 class UserFeatureLabelResolver:
     user_feature_label_dict = None
 
@@ -50,28 +87,3 @@ class UserFeatureLabelResolver:
                 UserFeatures.SIGN_OUT: "Sign out"
             }
         return UserFeatureLabelResolver.user_feature_label_dict
-
-
-class UserFeatureContentPanelResolver:
-    user_feature_content_panel_map = None
-
-    @staticmethod
-    def get_user_feature_panel(user_feature):
-        return UserFeatureContentPanelResolver.get_user_feature_content_panel_map().get(user_feature)
-
-    @staticmethod
-    def get_user_feature_content_panel_map():
-        if UserFeatureContentPanelResolver.user_feature_content_panel_map is None:
-            UserFeatureContentPanelResolver.user_feature_content_panel_map = {
-                "Employees": EmployeeManagerContentPanel(),
-                "Task": TaskManagerContentPanel(),
-                "Departments": DepartmentManagerContentPanel(),
-                "Payrolls": PayrollManagerContentPanel(),
-                "Holidays": HolidayManagerContentPanel(),
-                "Accounts": AccountManagerContentPanel(),  # Corrected to "Accounts"
-                "Customers": CustomerManagementContentPanel(),
-                "Sales": SalesManagementContentPanel(),
-                "Calendar": CalendarManagementContentPanel(),  # Corrected to "Calendar"
-                "Sign out": None  # Optional, can be set to None or a specific action
-            }
-        return UserFeatureContentPanelResolver.user_feature_content_panel_map
